@@ -17,7 +17,12 @@ import (
 func main() {
 	config := config.NewConfig()
 
-	client, err := mongo.NewClient(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s/", config.CentralLibraryDBHost, config.CentralLibraryDBPort)))
+	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.CentralLibraryDBHost, config.CentralLibraryDBPort)
+
+	println(db_connection)
+
+	client, err := mongo.NewClient(options.Client().ApplyURI(db_connection))
+
 	if err != nil {
 		log.Fatal(err)
 	}

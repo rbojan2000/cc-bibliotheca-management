@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  central_library:
+    image: central_library
+    container_name: central_library
+    build:
+      context: ./central-library
+      dockerfile: Dockerfile
+    depends_on:
+      - central_library_db
+    networks:
+      - network
+    ports:
+      - 9080:9080
+
+  central_library_db:
+    image: mongo
+    container_name: central_library_db
+    restart: on-failure
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge

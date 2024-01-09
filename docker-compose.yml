@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   central_library:
-    image: central_library
+    image: rbojan2000/central_library
     container_name: central_library
     build:
       context: ./central-library

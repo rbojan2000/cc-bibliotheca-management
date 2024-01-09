@@ -37,18 +37,24 @@ func (s Server) GetUser(ctx *gin.Context) {
 }
 
 func (s Server) CreateUser(ctx *gin.Context) {
-	var user model.User
-	if err := ctx.ShouldBindJSON(&user); err != nil {
+	var newUser model.User
+	if err := ctx.ShouldBindJSON(&newUser); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
 		return
 	}
-	user.NumOfRentedBooks = 0
-	user, err := s.repository.CreateUser(ctx, user)
+
+	if _, err := s.repository.GetUser(ctx, newUser.ID); err == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "user exists"})
+		return
+	}
+
+	newUser.NumOfRentedBooks = 0
+	newUser, err := s.repository.CreateUser(ctx, newUser)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"user": user})
+	ctx.JSON(http.StatusOK, gin.H{"user": newUser})
 }
 
 func (s Server) UpdateUserNumOfBooksRented(ctx *gin.Context) {

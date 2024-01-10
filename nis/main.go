@@ -19,7 +19,7 @@ func main() {
 
 	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.NisLibraryDBHost, config.NisLibraryDBPort)
 
-	println(db_connection)
+	fmt.Sprintf("db connection string: %s", db_connection)
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(db_connection))
 

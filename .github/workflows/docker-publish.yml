@@ -21,13 +21,9 @@ jobs:
           filters: |
             central-library:
               - 'central-library/**'
-            belgrade:
-              - 'belgrade/**'
-            nis:
-              - 'nis/**'
-            novi-sad:
-              - 'novi-sad/**'
-
+            city-library:
+              - 'city-library/**'
+    
       - name: Docker login
         uses: docker/login-action@v2
         with:

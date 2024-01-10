@@ -11,4 +11,5 @@ type Repository interface {
 	CreateUser(ctx context.Context, in model.User) (model.User, error)
 	UpdateUser(ctx context.Context, in model.User) (model.User, error)
 	DeleteUser(ctx context.Context, id string) error
+	GetUserByMembership(ctx context.Context, membership string) (model.User, error)
 }

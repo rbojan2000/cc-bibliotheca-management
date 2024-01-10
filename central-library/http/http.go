@@ -2,9 +2,9 @@ package http
 
 import (
 	"errors"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
 
 	"github.com/rbojan2000/central-library/model"
 	"github.com/rbojan2000/central-library/repository"
@@ -58,20 +58,28 @@ func (s Server) CreateUser(ctx *gin.Context) {
 }
 
 func (s Server) UpdateUserNumOfBooksRented(ctx *gin.Context) {
-	id := ctx.Param("id")
-	if id == "" {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid argument id"})
+	membership := ctx.Param("membership")
+	numStr := ctx.Param("num")
+
+	if membership == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid argument membership"})
 		return
 	}
 
-	user, err := s.repository.GetUser(ctx, id)
+	num, err := strconv.Atoi(numStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid argument num"})
+		return
+	}
 
-	if user.NumOfRentedBooks == 3 {
+	user, err := s.repository.GetUserByMembership(ctx, membership)
+
+	if user.NumOfRentedBooks == 3 && num == 1 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "user has already rented 3 books"})
 		return
 	}
 
-	user.NumOfRentedBooks++
+	user.NumOfRentedBooks = user.NumOfRentedBooks + num
 
 	user, err = s.repository.UpdateUser(ctx, user)
 	if err != nil {

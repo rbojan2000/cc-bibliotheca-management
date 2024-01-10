@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   central_library:
-    image: rbojan2000/central_library
-    container_name: central_library
+    image: rbojan2000/central-library
+    container_name: central-library
     build:
       context: ./central-library
       dockerfile: Dockerfile
@@ -21,6 +21,27 @@ services:
     networks:
       - network
 
+  nis_library:
+    image: rbojan2000/nis-library
+    container_name: nis_library
+    build:
+      context: ./nis
+      dockerfile: Dockerfile
+    depends_on:
+      - nis_library_db
+    networks:
+      - network
+    ports:
+      - 9081:9081
+
+  nis_library_db:
+    image: mongo
+    container_name: nis_library_db
+    restart: on-failure
+    networks:
+      - network
+
 networks:
   network:
     driver: bridge
+ 

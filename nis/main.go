@@ -3,21 +3,21 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/rbojan2000/central-library/config"
+	"github.com/rbojan2000/nis/config"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/rbojan2000/central-library/http"
-	"github.com/rbojan2000/central-library/repository"
+	"github.com/rbojan2000/nis/http"
+	"github.com/rbojan2000/nis/repository"
 )
 
 func main() {
 	config := config.NewConfig()
 
-	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.CentralLibraryDBHost, config.CentralLibraryDBPort)
+	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.NisLibraryDBHost, config.NisLibraryDBPort)
 
 	println(db_connection)
 
@@ -31,7 +31,7 @@ func main() {
 	}
 
 	// create a repository
-	repository := repository.NewRepository(client.Database("users"))
+	repository := repository.NewRepository(client.Database("borrows"))
 
 	// create an http server
 	server := http.NewServer(repository)
@@ -39,10 +39,9 @@ func main() {
 	// create a gin router
 	router := gin.Default()
 	{
-		router.GET("/users/:id", server.GetUser)
-		router.POST("/users", server.CreateUser)
-		router.PUT("/users/:membership/:num", server.UpdateUserNumOfBooksRented)
-		router.DELETE("/users/:id", server.DeleteUser)
+		router.GET("/borrows/:id", server.GetBorrow)
+		router.POST("/borrows", server.CreateBorrow)
+		router.DELETE("/borrows/:id", server.DeleteBorrow)
 	}
 
 	// start the router

@@ -19,6 +19,21 @@ type repository struct {
 	db *mongo.Database
 }
 
+func (r repository) GetUserByMembership(ctx context.Context, membershipCard string) (model.User, error) {
+	var out user
+	err := r.db.
+		Collection("users").
+		FindOne(ctx, bson.M{"membershipcard": membershipCard}).
+		Decode(&out)
+	if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return model.User{}, ErrUserNotFound
+		}
+		return model.User{}, err
+	}
+	return toModel(out), nil
+}
+
 func NewRepository(db *mongo.Database) Repository {
 	return &repository{db: db}
 }
@@ -82,6 +97,7 @@ type user struct {
 	Name             string `json:"name"`
 	Surname          string `json:"surname"`
 	NumOfRentedBooks int    `json:"numOfRentedBooks"`
+	MembershipCard   string `json:"membershipCard"`
 }
 
 func fromModel(in model.User) user {
@@ -90,6 +106,7 @@ func fromModel(in model.User) user {
 		Surname:          in.Surname,
 		ID:               in.ID,
 		NumOfRentedBooks: in.NumOfRentedBooks,
+		MembershipCard:   in.MembershipCard,
 	}
 }
 
@@ -99,5 +116,6 @@ func toModel(in user) model.User {
 		Name:             in.Name,
 		Surname:          in.Surname,
 		NumOfRentedBooks: in.NumOfRentedBooks,
+		MembershipCard:   in.MembershipCard,
 	}
 }

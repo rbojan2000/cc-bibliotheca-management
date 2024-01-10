@@ -23,6 +23,10 @@ jobs:
               - 'central-library/**'
             belgrade:
               - 'belgrade/**'
+            nis:
+              - 'nis/**'
+            novi-sad:
+              - 'novi-sad/**'
 
       - name: Docker login
         uses: docker/login-action@v2
@@ -39,4 +43,18 @@ jobs:
       - name: Build and push Docker image for belgrade
         if: steps.changes.outputs.belgrade == 'true'
         run: |
-          echo 'hello from belgrade'
+          docker build -t rbojan2000/belgrade ./belgrade
+          docker push rbojan2000/belgrade:latest
+
+      - name: Build and push Docker image for novi sad
+        if: steps.changes.outputs.novi-sad == 'true'
+        run: |
+          docker build -t rbojan2000/novi-sad ./novi-sad
+          docker push rbojan2000/novi-sad:latest
+
+      - name: Build and push Docker image for nis
+        if: steps.changes.outputs.nis == 'true'
+        run: |
+          docker build -t rbojan2000/nis ./nis
+          docker push rbojan2000/nis:latest
+

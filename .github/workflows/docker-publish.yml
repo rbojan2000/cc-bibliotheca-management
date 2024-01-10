@@ -6,6 +6,8 @@ on:
     paths:
       - 'central-library/**'
       - 'belgrade/**'
+      - 'nis/**'
+      - 'novi-sad/**'
 
 jobs:
   build:

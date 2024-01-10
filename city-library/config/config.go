@@ -9,21 +9,23 @@ import (
 
 type Config struct {
 	Port               string
-	NisLibraryDBHost   string
-	NisLibraryDBPort   string
+	LibraryDBHost      string
+	LibraryDBPort      string
 	CentralLibraryPort string
 	CentralLibraryHost string
+	City               string
 }
 
 func NewConfig() *Config {
 	LoadEnv()
 
 	return &Config{
-		Port:               os.Getenv("NIS_LIBRARY_PORT"),
-		NisLibraryDBHost:   os.Getenv("NIS_LIBRARY_DB_HOST"),
-		NisLibraryDBPort:   os.Getenv("NIS_LIBRARY_DB_PORT"),
+		Port:               os.Getenv("LIBRARY_PORT"),
+		LibraryDBHost:      os.Getenv("LIBRARY_DB_HOST"),
+		LibraryDBPort:      os.Getenv("LIBRARY_DB_PORT"),
 		CentralLibraryHost: os.Getenv("CENTRAL_LIBRARY_HOST"),
 		CentralLibraryPort: os.Getenv("CENTRAL_LIBRARY_PORT"),
+		City:               os.Getenv("CITY"),
 	}
 }
 

@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/rbojan2000/nis/config"
+	"github.com/rbojan2000/city/config"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/rbojan2000/nis/model"
-	"github.com/rbojan2000/nis/repository"
+	"github.com/rbojan2000/city/model"
+	"github.com/rbojan2000/city/repository"
 )
 
 type Server struct {

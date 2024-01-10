@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/rbojan2000/nis/model"
+	"github.com/rbojan2000/city/model"
 )
 
 type Repository interface {

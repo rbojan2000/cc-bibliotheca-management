@@ -22,10 +22,10 @@ services:
       - network
 
   nis_library:
-    image: rbojan2000/nis-library
+    image: rbojan2000/city-library
     container_name: nis_library
     build:
-      context: ./nis
+      context: ./city-library
       dockerfile: Dockerfile
     depends_on:
       - nis_library_db
@@ -33,10 +33,65 @@ services:
       - network
     ports:
       - 9081:9081
+    environment:
+      - LIBRARY_DB_HOST=nis_library_db
+      - LIBRARY_DB_PORT=27017
+      - LIBRARY_PORT=9081
+      - CITY=NIS
+
+  novi_sad_library:
+    image: rbojan2000/city-library
+    container_name: novi_sad_library
+    build:
+      context: ./city-library
+      dockerfile: Dockerfile
+    depends_on:
+      - novi_sad_library_db
+    networks:
+      - network
+    ports:
+      - 9082:9082
+    environment:
+      - LIBRARY_DB_HOST=novi_sad_library_db
+      - LIBRARY_DB_PORT=27017
+      - LIBRARY_PORT=9082
+      - CITY=NOVI-SAD
+
+  belgrade_library:
+    image: rbojan2000/city-library
+    container_name: belgrade_library
+    build:
+      context: ./city-library
+      dockerfile: Dockerfile
+    depends_on:
+      - belgrade_library_db
+    networks:
+      - network
+    ports:
+      - 9083:9083
+    environment:
+      - LIBRARY_DB_HOST=belgrade_library_db
+      - LIBRARY_DB_PORT=27017
+      - LIBRARY_PORT=9083
+      - CITY=BELGRADE
 
   nis_library_db:
     image: mongo
     container_name: nis_library_db
+    restart: on-failure
+    networks:
+      - network
+
+  novi_sad_library_db:
+    image: mongo
+    container_name: novi_sad_library_db
+    restart: on-failure
+    networks:
+      - network
+
+  belgrade_library_db:
+    image: mongo
+    container_name: belgrade_library_db
     restart: on-failure
     networks:
       - network

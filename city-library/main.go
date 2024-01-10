@@ -3,21 +3,21 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/rbojan2000/nis/config"
+	"github.com/rbojan2000/city/config"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/rbojan2000/nis/http"
-	"github.com/rbojan2000/nis/repository"
+	"github.com/rbojan2000/city/http"
+	"github.com/rbojan2000/city/repository"
 )
 
 func main() {
 	config := config.NewConfig()
 
-	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.NisLibraryDBHost, config.NisLibraryDBPort)
+	db_connection := fmt.Sprintf("mongodb://%s:%s/", config.LibraryDBHost, config.LibraryDBPort)
 
 	fmt.Sprintf("db connection string: %s", db_connection)
 

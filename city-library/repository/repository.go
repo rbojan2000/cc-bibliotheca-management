@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/rbojan2000/nis/model"
+	"github.com/rbojan2000/city/model"
 )
 
 var (

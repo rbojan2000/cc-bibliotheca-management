@@ -1,4 +1,4 @@
-module github.com/rbojan2000/nis
+module github.com/rbojan2000/city
 
 go 1.19
 

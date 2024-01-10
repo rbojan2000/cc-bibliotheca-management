@@ -5,9 +5,7 @@ on:
     branches: [main]
     paths:
       - 'central-library/**'
-      - 'belgrade/**'
-      - 'nis/**'
-      - 'novi-sad/**'
+      - 'city-library/**'
 
 jobs:
   build:
@@ -42,21 +40,9 @@ jobs:
           docker build -t rbojan2000/central-library ./central-library
           docker push rbojan2000/central-library:latest
 
-      - name: Build and push Docker image for belgrade
-        if: steps.changes.outputs.belgrade == 'true'
+      - name: Build and push Docker image for city-library
+        if: steps.changes.outputs.city-library == 'true'
         run: |
-          docker build -t rbojan2000/belgrade ./belgrade
-          docker push rbojan2000/belgrade:latest
-
-      - name: Build and push Docker image for novi sad
-        if: steps.changes.outputs.novi-sad == 'true'
-        run: |
-          docker build -t rbojan2000/novi-sad ./novi-sad
-          docker push rbojan2000/novi-sad:latest
-
-      - name: Build and push Docker image for nis
-        if: steps.changes.outputs.nis == 'true'
-        run: |
-          docker build -t rbojan2000/nis ./nis
-          docker push rbojan2000/nis:latest
+          docker build -t rbojan2000/city-library ./city-library
+          docker push rbojan2000/city-library:latest
 

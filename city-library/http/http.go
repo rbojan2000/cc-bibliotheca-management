@@ -41,6 +41,8 @@ func (s Server) GetBorrow(ctx *gin.Context) {
 
 func (s Server) evidentBorrow(membershipID string, num string) (bool, error) {
 	config := config.NewConfig()
+
+	println("central library url: ", config.CentralLibraryHost, config.CentralLibraryPort)
 	url := fmt.Sprintf("http://%s:%s/users/%s/%s", config.CentralLibraryHost, config.CentralLibraryPort, membershipID, num)
 
 	data := []byte(`{}`)

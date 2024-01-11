@@ -39,9 +39,9 @@ func main() {
 	// create a gin router
 	router := gin.Default()
 	{
-		router.GET("/borrows/:id", server.GetBorrow)
-		router.POST("/borrows", server.CreateBorrow)
-		router.DELETE("/borrows/:id", server.DeleteBorrow)
+		router.GET(fmt.Sprintf("%s/borrows/:id", config.City), server.GetBorrow)
+		router.POST(fmt.Sprintf("%s/borrows", config.City), server.CreateBorrow)
+		router.DELETE(fmt.Sprintf("%s/borrows/:id", config.City), server.DeleteBorrow)
 	}
 
 	// start the router

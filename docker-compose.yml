@@ -3,7 +3,7 @@ version: "3.8"
 services:
   central_library:
     image: rbojan2000/central-library
-    container_name: central-library
+    container_name: central_library
     build:
       context: ./central-library
       dockerfile: Dockerfile
@@ -13,6 +13,10 @@ services:
       - network
     ports:
       - 9080:9080
+    environment:
+      - CENTRAL_LIBRARY_DB_HOST=central_library_db
+      - CENTRAL_LIBRARY_DB_PORT=27017
+      
 
   central_library_db:
     image: mongo
@@ -37,7 +41,7 @@ services:
       - LIBRARY_DB_HOST=nis_library_db
       - LIBRARY_DB_PORT=27017
       - LIBRARY_PORT=9081
-      - CITY=NIS
+      - CITY=nis
 
   novi_sad_library:
     image: rbojan2000/city-library
@@ -55,7 +59,7 @@ services:
       - LIBRARY_DB_HOST=novi_sad_library_db
       - LIBRARY_DB_PORT=27017
       - LIBRARY_PORT=9082
-      - CITY=NOVI-SAD
+      - CITY=novisad
 
   belgrade_library:
     image: rbojan2000/city-library
@@ -73,7 +77,7 @@ services:
       - LIBRARY_DB_HOST=belgrade_library_db
       - LIBRARY_DB_PORT=27017
       - LIBRARY_PORT=9083
-      - CITY=BELGRADE
+      - CITY=belgrade
 
   nis_library_db:
     image: mongo

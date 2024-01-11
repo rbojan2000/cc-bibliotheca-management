@@ -1,0 +1,37 @@
+# central-library-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: central-library-deployment
+spec:
+  selector:
+    matchLabels:
+      app: central-library
+  template:
+    metadata:
+      labels:
+        app: central-library
+    spec:
+      containers:
+        - name: central-library
+          image: rbojan2000/central-library
+          ports:
+            - containerPort: 9080
+          env:
+            - name: CENTRAL_LIBRARY_DB_HOST
+              value: localhost
+            - name: CENTRAL_LIBRARY_DB_PORT
+              value: "27017"
+            - name: CENTRAL_LIBRARY_PORT
+              value: "9080"
+        - name: central-library-db
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: central-library-mongo-data
+      volumes:
+        - name: central-library-mongo-data
+          persistentVolumeClaim:
+            claimName: central-library-pvc

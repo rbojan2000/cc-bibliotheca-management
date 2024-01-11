@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: belgrade-library-deployment
+spec:
+  selector:
+    matchLabels:
+      app: belgrade-library
+  template:
+    metadata:
+      labels:
+        app: belgrade-library
+    spec:
+      containers:
+        - name: belgrade-library
+          image: rbojan2000/city-library
+          ports:
+            - containerPort: 9080
+          env:
+            - name: LIBRARY_DB_HOST
+              value: "localhost"
+            - name: LIBRARY_DB_PORT
+              value: "27017"
+            - name: LIBRARY_PORT
+              value: "9081"
+            - name: CITY
+              value: belgrade
+            - name: CENTRAL_LIBRARY_HOST
+              value: central-library-service
+            - name: CENTRAL_LIBRARY_PORT
+              value: "80"
+
+        - name: belgrade-library-db
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: belgrade-library-mongo-data
+      volumes:
+        - name: belgrade-library-mongo-data
+          persistentVolumeClaim:
+            claimName: belgrade-library-pvc

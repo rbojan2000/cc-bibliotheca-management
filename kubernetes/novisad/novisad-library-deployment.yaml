@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novisad-library-deployment
+spec:
+  selector:
+    matchLabels:
+      app: novisad-library
+  template:
+    metadata:
+      labels:
+        app: novisad-library
+    spec:
+      containers:
+        - name: novisad-library
+          image: rbojan2000/city-library
+          ports:
+            - containerPort: 9080
+          env:
+            - name: LIBRARY_DB_HOST
+              value: "localhost"
+            - name: LIBRARY_DB_PORT
+              value: "27017"
+            - name: LIBRARY_PORT
+              value: "9081"
+            - name: CITY
+              value: novisad
+            - name: CENTRAL_LIBRARY_HOST
+              value: central-library-service
+            - name: CENTRAL_LIBRARY_PORT
+              value: "80"
+
+        - name: novisad-library-db
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: novisad-library-mongo-data
+      volumes:
+        - name: novisad-library-mongo-data
+          persistentVolumeClaim:
+            claimName: novisad-library-pvc

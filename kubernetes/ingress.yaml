@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: library-ingress
+spec:
+  rules:
+    - host: ingress-host
+      http:
+        paths:
+          - path: /nis
+            pathType: Prefix
+            backend:
+              service:
+                name: nis-library-service
+                port:
+                  number: 80
+          - path: /novisad
+            pathType: Prefix
+            backend:
+              service:
+                name: novisad-library-service
+                port:
+                  number: 80
+          - path: /belgrade
+            pathType: Prefix
+            backend:
+              service:
+                name: belgrade-library-service
+                port:
+                  number: 80
+          - path: /users
+            pathType: Prefix
+            backend:
+              service:
+                name: central-library-service
+                port:
+                  number: 80

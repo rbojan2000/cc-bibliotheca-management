@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nis-library-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nis-library
+  template:
+    metadata:
+      labels:
+        app: nis-library
+    spec:
+      containers:
+        - name: nis-library
+          image: rbojan2000/city-library
+          ports:
+            - containerPort: 9080
+          env:
+            - name: LIBRARY_DB_HOST
+              value: "localhost"
+            - name: LIBRARY_DB_PORT
+              value: "27017"
+            - name: LIBRARY_PORT
+              value: "9080"
+            - name: CITY
+              value: nis
+            - name: CENTRAL_LIBRARY_HOST
+              value: central-library-service
+            - name: CENTRAL_LIBRARY_PORT
+              value: "80"
+
+        - name: nis-library-db
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: nis-library-mongo-data
+      volumes:
+        - name: nis-library-mongo-data
+          persistentVolumeClaim:
+            claimName: nis-library-pvc

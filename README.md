@@ -38,4 +38,4 @@ Executing ./run.sh will perform the following tasks:
 4. Display the host information for the Ingress
 
 ### Architecture
-![architecture](../docs/arch.png)
+![architecture](/docs/arch.png)

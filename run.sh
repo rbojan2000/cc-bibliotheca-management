@@ -24,5 +24,5 @@ kubectl apply -f kubernetes/novisad/novisad-library-service.yaml
 
 kubectl apply -f kubernetes/ingress.yaml
 
-echo #### kubectl host #####
+echo "#### kubectl host #####"
 kubectl get ingres

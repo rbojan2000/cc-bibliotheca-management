@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	ErrUserNotFound = errors.New("user not found")
+	ErrUserNotFound = errors.New("User not found")
 )
 
 type repository struct {
